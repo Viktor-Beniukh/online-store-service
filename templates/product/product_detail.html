@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+    {% if category %}
+      {{ category.name }}{% else %}Products
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="product-detail">
+
+        <img style="width: 300px" src="{% if product.image %}{{ product.image.url }}
+                  {% else %}{% static 'images/no_image.jpg' %}{% endif %} " alt=""
+        >
+
+        <h1>
+          &#8195;{{ product.name }}
+          {% if user.is_staff %}
+          <a href="{% url 'product:product-delete' product.id product.slug %}"
+             class="btn btn-danger link-to-page float-right">
+            Delete
+          </a>
+
+          <a href="{% url 'product:product-update' product.id product.slug %}"
+             class="btn btn-secondary link-to-page float-right mr-2">
+            Update
+          </a>
+          {% endif %}
+        </h1>
+
+        <h2><a href="{{ product.category.get_absolute_url }}"><small>&#8195; <em>{{ product.category }}</em></small></a></h2>
+        <p class="price">&#8195; ${{ product.price }}</p>
+        {% if product.get_rating > 0 %}
+            <h5 class="mt-1 text-gray">&#8195; <em>Rating:</em> {{ product.get_rating }} / 5</h5>
+        {% endif %}
+      <br>
+        {{ product.description|linebreaks }}&#8195;&#8195;
+
+          {% if user.is_authenticated %}
+            {% if product.inventory %}
+            <form action="{% url 'cart:cart-add' product.id %}" method="post">
+              {{ cart_product_form }}
+              {% csrf_token %}
+              <input type="submit" value="Add to cart">
+            </form>
+              <br>
+              {% if product.inventory < 5 %}
+                <span class="text-warning" style="font-size: 18px"><em>Running out</em></span>
+              {% else %}
+                <span class="text-success" style="font-size: 18px"><em>Available</em></span>
+              {% endif %}
+            {% else %}
+              <span class="text-dark text-muted" style="font-size: 18px"><em>Not Available</em><em></em></span>
+            {% endif %}
+          {% else %}<br><br>
+            <span style="font-size: 18px; color: chocolate"><em>You should log in!</em></span>&#8195;
+            <a href="{% url 'user:login' %}">Sign in</a><br><br>
+            <span style="font-size: 18px; color: darkorange"><em>Don't have an account?</em></span>&#8195;
+            <a href="{% url 'user:register' %}">Sign up</a>
+          {% endif %}
+    </div>
+  <hr>
+  </div>
+
+  <div class="container mt-5">
+
+  {% if user.is_authenticated %}
+    <h2>Reviews</h2>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div>
+        <label><h6>Rating</h6></label><br>
+        <label>
+          <select name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+
+        <br><br>
+        <div>
+          <label><h4>Comment</h4></label><br>
+
+          <label>
+            <textarea name="content" style="width: 500px; height: 200px"></textarea>
+          </label>
+        </div>
+
+        <div>
+          <button class="btn btn-outline-secondary">Submit</button>
+        </div>
+
+      </div>
+    </form>
+    <hr>
+  {% endif %}
+
+    <br><br>
+    {% for review in product.reviews.all %}
+      <div class="bg-gray-100 rounded-lg mb-4">
+      {% if review.created_by_id == review.created_by.id %}
+        <p style="text-decoration-line: underline">
+          <em>By {{ review.created_by.first_name }} {{ review.created_by.last_name }}</em>
+        </p>
+      {% endif %}
+        <p><strong>Rating: </strong>&#8195; {{ review.rating }}/5</p>
+        <hr>
+        <p><strong>Date:</strong>&#8195; {{ review.created_at }}</p>
+        <hr>
+        <p><strong>Comment:</strong>&#8195; {{ review.content }}</p>
+        <hr><br>
+
+      </div>
+    {% endfor %}
+
+  </div>
+
+{% endblock %}
