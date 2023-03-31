@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from core.views import frontpage
+from order.views import CreateCheckoutSessionView, success, cancel
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,6 +27,14 @@ urlpatterns = [
     path("cart/", include("cart.urls", namespace="cart")),
     path("products/", include("product.urls", namespace="products")),
     path("user/", include("user.urls", namespace="user")),
+    path("orders/", include("order.urls", namespace="orders")),
+    path(
+        "<int:pk>/create-checkout-session/",
+        CreateCheckoutSessionView.as_view(),
+        name="create-checkout-session"
+    ),
+    path("success/", success, name="success"),
+    path("cancel/", cancel, name="cancel"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

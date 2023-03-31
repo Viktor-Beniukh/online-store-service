@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Thank you for order{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Thank you for order</h1>
+    <p>Your order has been successfully completed. Your order number is
+        <strong>{{ order.id }}</strong>.
+    </p>
+    <br>
+    <hr>
+    <h5>You can pay your order</h5>
+    <br>
+    <a class="btn btn-outline-secondary" href="{% url 'create-checkout-session' order.id %}">Payment</a>
+  </div>
+
+{% endblock %}
