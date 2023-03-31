@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "core",
+    "cart",
     "product",
+    "order",
     "user",
 ]
 
@@ -57,6 +59,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+SESSION_COOKIE_AGE = 86400
+CART_SESSION_ID = "cart"
 
 ROOT_URLCONF = "store_service.urls"
 
@@ -115,6 +120,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "user.User"
+
+LOGIN_REDIRECT_URL = "frontpage"
+
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 # Internationalization
