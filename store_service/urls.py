@@ -25,6 +25,7 @@ urlpatterns = [
     path("", frontpage, name="frontpage"),
     path("cart/", include("cart.urls", namespace="cart")),
     path("products/", include("product.urls", namespace="products")),
+    path("user/", include("user.urls", namespace="user")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
