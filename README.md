@@ -43,17 +43,17 @@ Docker should be installed
 ## Features
 
 - Authentication functionally for User:
-  ~ registration and authorisation
-  ~ create and edit user credentials
-  ~ create and edit user profile
-  ~ change password if you need
-  ~ reset password if you forgot your password
+  - registration and authorisation;
+  - create and edit user credentials;
+  - create and edit user profile;
+  - change password if you need;
+  - reset password if you forgot your password.
 
 - Managing products and categories of products directly from website:
-  ~ add, update, remove products and categories of products (only an admin)
-  ~ managing the product cart and orders
-  ~ opportunity of the orders history tracing
-  ~ possible to leave ratings, reviews and comments to a product
+  - add, update, remove products and categories of products (only an admin);
+  - managing the product cart and orders;
+  - opportunity of the orders history tracing;
+  - possible to leave ratings, reviews and comments to a product.
 
 - Implementation online payment system (Stripe Payment)
 - Powerful admin panel for advanced managing
