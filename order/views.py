@@ -134,4 +134,3 @@ def cancel(request):
             order.save()
 
     return render(request, "order/cancel.html")
-

@@ -72,7 +72,9 @@ def product_detail(request, pk, slug):
                     created_by=request.user
                 )
 
-            return redirect("product:product-detail", id=product.id, slug=product.slug)
+            return redirect(
+                "product:product-detail", id=product.id, slug=product.slug
+            )
 
     context = {
         "product": product,
