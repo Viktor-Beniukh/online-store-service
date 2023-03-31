@@ -23,6 +23,7 @@ from core.views import frontpage
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", frontpage, name="frontpage"),
+    path("cart/", include("cart.urls", namespace="cart")),
     path("products/", include("product.urls", namespace="products")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
