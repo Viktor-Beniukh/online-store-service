@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>My Orders</h1>
+    <br>
+    <hr>
+    <br>
+    {% if page_obj %}
+      {% for order in page_obj %}
+      <h2 style="text-decoration-line: underline">
+        Order №{{ order.id }}
+        {% if order.status_payment == order.CANCELLED %}
+        <a class="btn btn-outline-secondary float-right" href="{% url 'create-checkout-session' order.id %}">Payment</a>
+        {% endif %}
+        {% if order.status_payment == order.PENDING %}
+        <a class="btn btn-outline-secondary float-right" href="{% url 'create-checkout-session' order.id %}">Payment</a>
+        {% endif %}
+      </h2>
+        <br>
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col"><strong>Created:</strong>&#8194; {{ order.created_at }}</th>
+              <th scope="col"><strong>Total cost:</strong>&#8194; ${{ order.get_total_cost }}</th>
+              <th scope="col"><strong>Payment status:</strong>&#8194; {{ order.status_payment }}</th>
+              <th scope="col"><strong>Order status:</strong>&#8194; {{ order.status_order }}</th>
+              <th scope="col"><strong>Paid status:</strong>&#8194; {{ order.is_paid }}</th>
+            </tr>
+          </thead>
+        </table>
+
+        {% for item in order.items.all %}
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Image</th>
+              <th scope="col">Name</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit price</th>
+              <th scope="col">Total price</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><img src="{% if item.product.image %}{{ item.product.image.url }}
+                {% else %}{% static 'images/no_image.jpg' %}{% endif %}" alt="" width="100">
+              </td>
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ item.product.price }}</td>
+              <td>${{ item.get_cost }}</td>
+            </tr>
+          </tbody>
+        </table><br><br>
+        {% endfor %}
+
+      {% endfor %}
+    {% endif %}
+  </div>
+
+{% endblock %}

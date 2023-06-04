@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Remove category{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3"></div>
+
+      <div class="col-lg-6">
+        <h1>Delete category?</h1>
+        <hr>
+        <p>
+          Are you sure you want to delete the category: <strong>{{ category }}</strong>?
+        </p>
+
+        <form action="" method="post">
+          {% csrf_token %}
+          <hr>
+          <br>
+
+          <input type="submit" value="Yes, delete" class="btn btn-danger">
+          <a href="{% url 'product:product-list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+
+      <div class="col-lg-3"></div>
+    </div>
+
+  </div>
+
+{% endblock %}

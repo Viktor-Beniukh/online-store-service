@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+  {{ object|yesno:"Update,Add" }} category
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3"></div>
+
+      <div class="col-lg-6">
+        <h1>{{ object|yesno:"Update,Add" }} category...</h1>
+        <br>
+        <form action="" method="post" novalidate>
+          {% csrf_token %}
+          {{ form|crispy }}
+
+          <input type="submit" value="Submit" class="btn btn-secondary">
+        </form>
+      </div>
+
+      <div class="col-lg-3"></div>
+    </div>
+  </div>
+
+{% endblock %}

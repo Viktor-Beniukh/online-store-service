@@ -1,0 +1,83 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-grey fixed-top">&#8195;&#8195;
+  <a class="navbar-brand text-dark text-black-50 font-weight-bolder" href="{% url 'product:product-list' %}">My shop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-dark text-black-50 font-weight-bolder"
+           href="{% url 'frontpage' %}">Home <span class="sr-only">(current)</span></a>
+      </li>&#8195;
+
+      {% if user.is_staff %}
+      <li class="nav-item">
+        <a class="nav-link text-dark text-black-50 font-weight-bolder"
+           href="{% url 'product:category-create' %}">Add category</a>
+      </li>&#8195;
+      <li class="nav-item">
+        <a class="nav-link text-dark text-black-50 font-weight-bolder"
+           href="{% url 'product:product-create' %}">Add product</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+          <strong>Hello, {{ user.first_name }} {{ user.last_name }}</strong>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="{% url 'user:edit-settings' %}">Edit Settings</a>
+          {% if user.profile.id %}
+            <a class="dropdown-item" href="{% url 'user:edit-profile' user.profile.id %}">Edit Profile</a>
+          {% else %}
+            <a class="dropdown-item" href="{% url 'user:create-profile' %}">Create Profile</a>
+          {% endif %}
+          <a class="dropdown-item" href="{% url 'order:order-list' %}">My Orders</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'user:logout' %}">Sign out</a>
+        </div>
+      </li>&#8194;
+
+      <span>
+        <img src="{% if user.profile.image %}{{ user.profile.image.url }}
+             {% else %}{% static 'images/user.png' %}{% endif %}" alt=""
+             width="36" style="border-radius: 50%">
+      </span>
+
+      {% with total_items=cart|length %}
+
+        <a class="nav-link" href="{% url 'cart:cart-detail' %}">
+          <img  id="cart-icon" src="{% static 'images/cart.png' %}" alt="">
+        </a>
+
+        {% if cart|length > 0 %}
+          <p id="cart-total">{{ total_items }}</p>
+        {% else %}
+          <p id="cart-total">0</p>
+        {% endif %}
+
+      {% endwith %}
+    </ul>&#8195;&#8195;
+
+    {% else %}
+      &#8194;
+      <span class="nav-item">
+        <a class="nav-link text-dark text-black-50 font-weight-bolder"
+           href="{% url 'user:register' %}">Sign up</a>
+      </span>
+      &#8194;&#8194;
+      <span class="nav-item">
+        <a class="nav-link text-dark text-black-50 font-weight-bolder"
+           href="{% url 'user:login' %}">Sign in</a>
+      </span>
+      &#8195;
+    {% endif %}
+
+  </div>
+</nav>

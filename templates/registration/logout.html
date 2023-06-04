@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+
+  <header class="bg-secondary" style="height: 300px">
+    <div class="mx-auto text-center pt-5">
+      <h3 class="mb-2 text-white" style="font-size: 54px">Welcome to My Shop</h3>
+      <br>
+      <p class="mb-10 text-white" style="font-size: large">We sell products for the modern life</p>
+    </div>
+  </header>
+  <br><br>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4"></div>
+
+      <div class="col-md-8">
+
+        <h1>Logout...</h1><br><br>
+
+        <h3>You have left your account</h3>
+        <div class="border-top pt-3">
+            <span class="text-muted">
+                <a href="{% url 'user:login' %}">Sign in</a>
+            </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

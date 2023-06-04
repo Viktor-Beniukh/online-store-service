@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+  <div class="row">
+
+    <div class="col-3">
+
+      <h3 class="mb-3 text-xl uppercase">Search</h3>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" name="query" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" value="🔎">🔎</button>
+      </form>
+
+      <div id="sidebar">
+
+        <h3>Categories</h3>
+
+        <ul>
+          <li {% if not category %}class="selected"{% endif %} >
+            <a href="{% url 'product:product-list' %}">All</a>
+          </li>
+
+          {% for cat in categories %}
+            <li {% if category.slug == cat.slug %}class="selected" {% endif %} >
+              <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+
+    </div>
+
+    <div class="col-sm-9">
+      <div id="main" class="product-list">
+
+        <h1>{% if category %}{{ category.name }}
+          {% if user.is_staff %}
+          <a href="{% url 'product:category-delete' category.slug %}"
+             class="btn btn-danger link-to-page float-right">
+            Delete
+          </a>
+
+          <a href="{% url 'product:category-update' category.slug %}"
+             class="btn btn-secondary link-to-page float-right mr-2">
+            Update
+          </a>
+          {% endif %}
+        {% else %}Products{% endif %}</h1><br>
+
+          <div class="row">
+            {% for product in page_obj %}
+            <div class="col-lg-4">
+              <img class="thumbnail" src="{% if product.image %}{{ product.image.url }}
+                {% else %}{% static 'images/no_image.jpg' %}{% endif %}" alt="">
+              <div class="box-element product">
+                <h6><strong>{{ product.name }}</strong></h6>
+                <hr>
+                <a class="btn btn-outline-success" href="{{ product.get_absolute_url }}">View</a>&#8195;
+                {% if product.inventory %}
+                  {% if product.inventory < 5 %}
+                    <span class="text-warning" style="font-size: 18px"><em>Running out</em></span>
+                  {% else %}
+                    <span class="text-success" style="font-size: 18px"><em>Available</em></span>
+                  {% endif %}
+                {% else %}
+                  <span class="text-dark text-muted" style="font-size: 18px"><em>Not Available</em></span>
+                {% endif %}
+                <h4 style="display: inline-block; float: right"><strong>${{ product.price }}</strong></h4>
+              </div>
+              <br>
+            </div>
+            {% endfor %}
+          </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

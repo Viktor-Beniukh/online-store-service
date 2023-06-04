@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}Create User Profile{% endblock %}
+
+{% block content %}
+
+  <header class="bg-secondary" style="height: 300px">
+    <div class="mx-auto text-center pt-5">
+      <h3 class="mb-2 text-white" style="font-size: 54px">Welcome to My Shop</h3>
+      <br>
+      <p class="mb-10 text-white" style="font-size: large">We sell products for the modern life</p>
+    </div>
+  </header>
+  <br><br>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3"></div>
+
+      <div class="col-md-7">
+      {% if user.is_authenticated %}
+
+        <h1>Create User Profile Page...</h1>
+        <br>
+
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button  class="btn btn-secondary">Create Profile</button>
+        </form>
+
+      {% else %}
+        <h5>You're not allowed here!</h5>&#8194;
+        <p><em>(and you know it...)</em></p>
+
+      {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

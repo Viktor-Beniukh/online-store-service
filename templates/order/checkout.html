@@ -1,0 +1,45 @@
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block content %}#}
+{#  <h1>Checkout</h1>#}
+{##}
+{#  <ul>#}
+{#    {% for item in items %}#}
+{#      <li>{{ item.name }} - ${{ item.price }}</li>#}
+{#    {% endfor %}#}
+{#  </ul>#}
+{##}
+{#  <button id="checkout-button">Checkout</button>#}
+{##}
+{#  <script src="https://js.stripe.com/v3/"></script>#}
+{#  <script>#}
+{#    var stripe = Stripe('{{ settings.STRIPE_PUBLIC_KEY }}');#}
+{##}
+{#    var checkoutButton = document.getElementById('checkout-button');#}
+{#    checkoutButton.addEventListener('click', function() {#}
+{#      // Call the create_checkout_session function on the server-side#}
+{#      fetch('{% url 'create-checkout-session' order.id %}', {#}
+{#        method: 'POST',#}
+{#        headers: {#}
+{#          'Content-Type': 'application/json',#}
+{#          'X-CSRFToken': '{{ csrf_token }}',#}
+{#        },#}
+{#        body: JSON.stringify({items: {{ items|json }} }),#}
+{#      })#}
+{#      .then(function(response) {#}
+{#        return response.json();#}
+{#      })#}
+{#      .then(function(session) {#}
+{#        // Redirect the user to the Stripe Checkout page#}
+{#        stripe.redirectToCheckout({#}
+{#          sessionId: session.sessionId,#}
+{#        })#}
+{#        .then(function(result) {#}
+{#          // If `redirectToCheckout` fails due to a browser or network#}
+{#          // error, display the localized error message to your customer#}
+{#          // using `result.error.message`.#}
+{#        });#}
+{#      });#}
+{#    });#}
+{#  </script>#}
+{#{% endblock %}#}

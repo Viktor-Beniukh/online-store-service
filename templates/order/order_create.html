@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>&#8195;&#8195;Checkout</h1>
+    <br>
+    <div class="row">
+
+      {% if cart.get_total_items %}
+      <div class="box-element">
+        <div class="col-lg-6">
+
+          <form action="." method="post" class="order-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" value="Place order"></p>
+          </form>
+
+        </div>
+      </div>
+      {% endif %}
+      &#8195;&#8195;&#8195;&#8195;
+
+      <div class="col-lg-6">
+        <div class="box-element">
+          <a class="btn btn-outline-dark" href="{% url 'cart:cart-detail' %}">&#8592; Back to Cart</a>
+          <hr>
+          <h3>Your Order</h3>
+          <hr>
+          {% for item in cart %}
+          <div class="cart-row">
+            <div style="flex: 2">
+              <img class="row-image" src="{% if item.product.image %}{{ item.product.image.url }}
+                   {% else %}{% static 'images/no_image.jpg' %}{% endif %}" alt="">
+            </div>
+            <div style="flex: 2"><p>{{ item.product.name }}</p></div>
+            <div style="flex: 1"><p>${{ item.product.price }}</p></div>
+            <div style="flex: 1"><p>x{{ item.quantity }}</p></div>
+          </div>
+          {% endfor %}
+          <h5>Items: {{ cart.get_total_items }}</h5>
+          <h5>Total: ${{ cart.get_total_price }}</h5>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

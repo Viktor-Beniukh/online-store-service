@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <header class="bg-secondary" style="height: 320px">
+    <div class="mx-auto text-center pt-5">
+      <h3 class="mb-2 text-white" style="font-size: 54px">Welcome to My Shop</h3>
+      <br>
+      <p class="mb-10 text-white" style="font-size: large">We sell products for the modern life</p>
+      {% if user.is_authenticated %}
+      <a href="{% url 'product:product-list' %}"
+         class="d-inline-block bg-white hover:bg-grey rounded-lg mt-3 p-3 shadow-lg text-dark text-black-50 font-weight-bolder"
+         style="font-size: large">Start shopping</a>
+      {% endif %}
+    </div>
+  </header>
+  <br><br>
+
+  <div class="row">
+    <div class="col-lg-2 ml-3">
+      <h4 class="text-center">Work schedule</h4>
+      <br>
+      <table class="table table-striped ml-3">
+        <thead>
+          <tr>
+            <th scope="col">Week days</th>
+            <th scope="col">Times</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monday</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tuesday</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Wednesday</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Thursday</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Friday</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Saturday</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Sunday</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <br><br><br>
+    </div>&#8195;&#8195;&#8195;
+
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-8">
+      <div class="card mb-3 ml-2" style="height: 500px">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-uppercase">A story of products development</h5>
+          <p class="card-text"></p>
+          <p></p>
+          <p class="card-text"><small class="text-muted"></small></p>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+          <div class="card text-uppercase" style="height: 300px">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">About us</h5>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col mb-4">
+          <div class="card text-uppercase" style="height: 300px">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">About our products</h5>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% block pagination %}{% endblock %}
+{% endblock %}
